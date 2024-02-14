@@ -1,0 +1,77 @@
+<div class="container app-container">
+  <div class="row w-100 m-0 h-100">
+    <div class="col-3 chat-border p-0 d-flex flex-column justify-content-between">
+      <div class="p-0">
+        <div class="row mt-2  p-0 w-100 search-row">
+          <div class="col mx-auto p-0 w-100 d-flex align-items-center" style="padding-right: 5px !important;">
+            <div class="input-group">
+              <input class="form-control search-input" type="search" placeholder="search chats" id="example-search-input">
+            </div>
+            <div ngbDropdown placement="bottom-end" display="dynamic">
+              <i class="bi bi-plus-circle-fill add-chats" ngbDropdownToggle pRipple></i>
+              <div ngbDropdownMenu class="downdown-menu">
+                <button ngbDropdownItem (click)="open(addChatModal)">New Chat</button>
+                <button ngbDropdownItem (click)="open(addGroupChatModal)">New Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2 list-row">
+          <li #menu class="list-group-item d-flex justify-content-between" [ngClass]="{'list-item-selected': chat.threadId == threadId}"
+            *ngFor="let chat of chats; let i = index" (click)="goToChat(chat)">
+            <div>
+              <span class="list-item-text">{{getParticipant(chat)}}
+              </span>
+              <i class="bi bi-people-fill participants" *ngIf="chat.participants && chat.participants.length > 2"></i>
+            </div>
+            <i class="bi bi-trash3-fill" style="margin-right: 5px;"></i>
+          </li>
+        </div>
+      </div>
+      <div class="p-3 d-flex justify-content-end" (click)="logout()" style="font-size: 16px; cursor: pointer;">
+       <span style="margin-right: 12px;">Logout</span>
+       <i class="bi bi-box-arrow-right"></i>
+      </div>
+    </div>
+    <div class="col-9 h-100 p-0">
+      <app-chat-thread *ngIf="communicationUserId && threadId" [userId]="communicationUserId" [topicName]="topicName"
+        [threadId]="threadId" [participants]="getChatUsers(threadId)"></app-chat-thread>
+    </div>
+  </div>
+</div>
+
+<ng-template #addChatModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Add Chat</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+    
+			<div class="mb-3">
+        <p-multiSelect placeholder="Select users" [appendTo]="'body'"  [options]="users" class="multi-select"
+         [autoZIndex]="true" [selectionLimit]="1" [showHeader]="false" optionLabel="label" [(ngModel)]="selectedUser"></p-multiSelect>
+			</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="createChat(); modal.close('Save click'); ">Create</button>
+	</div>
+</ng-template>
+
+<ng-template #addGroupChatModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Add group</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+    <div class="mb-3">
+      <input type="text" class="w-100" pInputText [(ngModel)]="groupTopicname" placeholder="Enter group name" />
+    </div>
+			<div class="mb-3">
+        <p-multiSelect placeholder="Select user" [appendTo]="'body'"  [options]="users" class="multi-select"
+         [autoZIndex]="true" [showHeader]="false" optionLabel="label" [(ngModel)]="selectedUser"></p-multiSelect>
+			</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="addGroupChat(); modal.close('Save click'); ">Create</button>
+	</div>
+</ng-template>

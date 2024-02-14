@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-dark-amber/theme.css";
+@import "primeng/resources/primeng.css";
+
+:root {
+    --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --msger-bg: #fff;
+    --border: 2px solid #ddd;
+    --left-msg-bg: #ececec;
+    --right-msg-bg: #579ffb;
+  }
+
+  .dropdown-menu {
+    background: rgb(45, 51, 64);
+
+    .dropdown-item {
+      color: white;
+    }
+
+    .dropdown-item:hover {
+      background: #E4AE1F;
+      color: black;
+    }
+  }
+
+  .p-overlay {
+    z-index: 9000 !important;
+
+    .listbox {
+      padding-left: 0;
+    }
+  }
+
+  p-multiselect {
+    .p-multiselect {
+      width: 100%;
+
+      .p-multiselect-label {color: white;}
+    }
+  }
+
+  .p-multiselect-panel {
+    .p-multiselect-items {
+      padding-left: 0 !important;
+    }
+  }

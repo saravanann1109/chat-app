@@ -1,0 +1,96 @@
+.container {
+
+    max-width: 1200px;
+    margin: 30px auto 0 auto;
+
+    .form-control {
+        margin-right: 10px;
+    }
+
+    .search-input {
+        background: #2d333f;
+        color: white !important;
+        border-radius: 50px;
+        border: 1px solid #2d333f;
+    }
+
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+
+.app-container {
+    padding: 0;
+    background: #04051A;
+    height: 700px;
+    color: white;
+    padding-right: 0;
+    border: 2px solid #04051A;
+
+    .col-10 {
+        padding-right: 0;
+    }
+
+    .search-row {
+        margin-left: 0;
+        margin-right: 0;
+
+        input {
+            margin: 5px !important;
+        }
+    }
+
+    .list-row {
+        margin-left: 0;
+        margin-right: 0;
+        // padding: 0 5px;
+
+        .list-group-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+
+            .list-item-text {
+                font-size: 18px;
+                padding: 10px;
+            }
+        }
+    }
+
+    .chat-border {
+        border-right: 1px solid #dee2e6;
+    }
+
+    .list-item-selected,
+    .list-group-item:hover {
+        background: #E4AE1F;
+        color: black;
+    }
+
+
+    .search-row {
+        .input-group {
+            width: 90% !important;
+        }
+        .add-chats {
+            font-size: 24px;
+            color: #E4AE1F;
+            cursor: pointer;
+        }
+
+        .add-chats::after {
+            display: none;
+        }
+
+        
+    }
+
+   
+}

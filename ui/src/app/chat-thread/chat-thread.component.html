@@ -1,0 +1,90 @@
+<section class="msger">
+  <header class="msger-header">
+    <div class="msger-header-title">
+      <div class="d-flex msger-header-options">
+        <div class="d-flex justify-content-center" *ngIf="isGroup">
+          <i class="bi bi-people-fill participants" (click)="op.toggle($event)"></i>
+          <p-overlayPanel #op>
+            <p-dataView #dv [value]="users">
+              <ng-template pTemplate="list" let-products>
+                  <div class="grid grid-nogutter">
+                      <div class="col-12" *ngFor="let item of users; let first = first">
+                          <div class="d-flex flex-column xl:flex-row xl:align-items-start p-2" [ngClass]="{ 'border-top-1 surface-border': !first }">
+                              <div class="d-flex sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                                  <div class="d-flex sm:align-items-start gap-3">
+                                    <img src="assets/profile.png" style="height: 20px; width: 20px;" />
+                                      <div class="text-2xl font-bold text-900">{{ item.userName }}</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+          </p-dataView>
+          </p-overlayPanel>
+      </div>
+      <span style="margin-left: 10px;">{{ isGroup ? topicName : getHeaderName() }}</span> 
+    </div>
+    </div>
+  </header>
+
+  <main class="msger-chat mt-2" #scrollMe >
+    <ng-container *ngFor="let message of messages; let i = index">
+    
+    <div class="msg left-msg" *ngIf="!message.isOwner">
+      <div
+       class="msg-img"
+       style="background-image: url('assets/profile.png')"
+      ></div>
+
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">{{message.sender}}</div>
+          <div class="msg-info-time">{{message.createdOn | date: 'HH:mm'}}</div>
+        </div>
+        <div class="msg-text d-flex flex-column">
+          <img *ngIf="message.image" [src]="apiUrl +'/images/' + message.image" style="height: 100px; width: 80px;"/>
+          <span class="m-1">{{message.message}}</span>
+       </div>
+      </div>
+    </div>
+
+    <div class="msg right-msg" *ngIf="message.isOwner">
+      <div
+       class="msg-img"
+       style="background-image: url('assets/man.png')"
+      ></div>
+
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">You</div>
+          <div class="msg-info-time">{{message.createdOn | date: 'HH:mm'}}</div>
+        </div>
+
+        <div class="msg-text d-flex flex-column">
+           <img *ngIf="message.image" [src]="apiUrl + '/images/' + message.image" style="height: 100px; width: 80px;"/>
+           <span class="m-1">{{message.message}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  </main>
+
+  <div class="msger-inputarea d-flex flex-column">
+    <div class="d-flex align-items-center w-100">
+      <div class="position-relative d-flex align-items-center" style="width: 95%;">
+        <input type="text" class="msger-input" placeholder="Message..." (keyup.enter)="messageSending ? null :sendMessage()" (focus)="notifyTyping()" (blur)="stopNotify()" [(ngModel)]="sendMsg.message">
+        <i class="bi bi-camera position-absolute image-click" (click)="file.click();"></i>
+      <input type="file" (change)="uploadImage($event)" [accept]="'image/png'" #file hidden /> 
+      </div>
+      <i class="bi bi-send send-btn" ngClass="{'send-btn-disabled ': messageSending}" (click)="messageSending ? null :sendMessage()"></i>
+    </div>
+    <div class="position-relative" *ngIf="sendMsg.file">
+      <i class="bi bi-x-circle-fill position-absolute close-icon-file" (click)="file.value = '';cancelUpload()"></i>
+      <div class="img" style="height: 100px;width: 100px;">
+        <img *ngIf="imageUrl" [src]="imageUrl"  style="width: 100%; height: auto;"/>
+      </div>
+    </div>
+  </div>
+  <span *ngIf="notifyDisplayName" class="typo-indicator">{{notifyDisplayName}} is typing...</span>
+</section>
